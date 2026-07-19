@@ -1,91 +1,50 @@
-# Color Panel Tool for Maya
+# Freeze Transforms Using Offset Parent Matrix
 
-Professional color and render settings tool for Maya control rigs, designed for animation and game production workflows.
+A Python script for Autodesk Maya that freezes object transformations using `offsetParentMatrix` while preserving hierarchy and world-space transforms.
 
----
-
-## Overview
-
-The Color Panel Tool is a Maya workspace tool that allows Riggers and Rigging TDs to quickly assign viewport colors and Arnold render settings to control curves.
-
-It is designed to improve rig readability, standardize control colors and automate render curve setup in production environments.
-
-This tool is suitable for:
-
-- Rigging TD workflows  
-- Animation rigs  
-- Game-ready rigs  
-- Pipeline integration
+Unlike Maya's traditional **Freeze Transformations**, this script computes the correct offset matrix relative to each object's parent, allowing transform channels to be reset without affecting the object's position, orientation or hierarchy.
 
 ---
 
 ## Features
 
-### Color Management
-
-- Assign Maya indexed colors  
-- Assign custom RGB colors  
-- Organized color blocks (Main, Side, Secondary controls)  
-- Visual color preview  
-- Save and load color presets (JSON)  
-
-### Arnold Render Setup
-
-- Apply Arnold curve render settings  
-- Automatic ramp shader creation  
-- Automatic place2dTexture connection  
-- Curve width control  
-- Sample rate control  
-- Automatic cleanup of unused nodes  
-
-### UI Integration
-
-- Dockable workspace panel  
-- Persistent settings  
-- Production-friendly interface  
+- [x] Freeze transforms using `offsetParentMatrix`
+- [x] Preserve parent-child hierarchies
+- [x] Maintain world-space position, rotation, and scale
+- [x] Reset Translate, Rotate, and Scale channels
+- [x] Support multiple selected objects
 
 ---
 
-## Installation
+## Requirements
 
-1. Download the file: color_panel.py
-2. Move it to your Maya scripts folder:
-
-    - **Windows:** Documents/maya/2026/scripts/
-    - **Mac / Linux:**  ~/maya/scripts/
-      
-3. Run in Maya Script Editor:
-
-```python
-import color_panel
-color_panel.show_color_panel()
-```
+- Autodesk Maya 2020 or newer (supports `offsetParentMatrix`)
+- Python
+- `maya.cmds`
+- `maya.OpenMaya`
 
 ---
 
 ## Usage
 
-**Open the tool:**
-1. Select controls
-2. Choose color
-3. Click **Apply Color**
+1. Open **Autodesk Maya**.
+2. Select one or more objects.
+3. Run the script from the **Script Editor**.
 
-**For rendering:**
-1. Select controls
-2. Adjust render settings
-3. Click **Render Selected Controls**
+The script will automatically:
+
+- Compute each object's world matrix.
+- Calculate its local offset relative to its parent.
+- Store the result in `offsetParentMatrix`.
+- Reset the transform channels while preserving the object's current transform.
 
 ---
 
-## Code Features
+## How It Works
 
-This tool follows professional Python and Maya standards:
+The script retrieves both the object's world transformation matrix and its parent's world matrix. It then computes the relative transformation and stores it in the `offsetParentMatrix` attribute.
 
-- Organized in functional sections (UI, Color Ops, Render Ops, Config)
-- Clear naming conventions
-- Safe node handling
-- JSON configuration system
-- Production-ready logic
+This allows the object's **Translate**, **Rotate**, and **Scale** attributes to be reset without changing its final position in the scene or breaking the hierarchy.
 
 ---
 
@@ -121,6 +80,4 @@ Full license: [https://www.gnu.org/licenses/gpl-3.0.html](https://www.gnu.org/li
 ## Portfolio Note
 
 This tool is part of a professional Rigging TD portfolio.
-
-
 
